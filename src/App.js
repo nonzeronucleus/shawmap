@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
 // import styled from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
+import Layout from './Layout';
 
 import Map from './Map';
 
-const GlobalStyle = createGlobalStyle`
-  .leaflet-container {
-    height: 1000px;
-    width: 100%;
-  }
 
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-`
+const Slider = ({opacity, handleOpacityChange}) => (
+  <>
+    <button onClick={() => handleOpacityChange(1)}>+</button>
+      {opacity}
+    <button onClick={() => handleOpacityChange(-1)}>-</button>
+  </>
+)
+
 
 export default () => {
   const [opacity, setOpacity] = useState(8);
@@ -31,12 +24,14 @@ export default () => {
   }
 
   return (
-      <>
-    <GlobalStyle/>
-      <Map showMap {...{opacity}} />
-      <button onClick={() => handleOpacityChange(1)}>+</button>
-        {opacity}
-      <button onClick={() => handleOpacityChange(-1)}>-</button>
-    </>
+    <Layout
+      logo={<img src="logo.png" alt="logo" width="100%"/>}
+      map={<Map showMap {...{opacity}} />}
+      side={<Slider {...{opacity, handleOpacityChange}} />}
+    />
   )
 }
+
+// export default () => (
+//   <Layout logo={<img src="logo.png" alt="logo" width="100%"/>} map={<Main />} side={<div>Side</div>}/>
+// );
