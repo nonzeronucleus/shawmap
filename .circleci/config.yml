@@ -38,7 +38,7 @@ jobs:
 
             - run:
                 name: Deploy to S3
-                command: aws s3 sync public s3://shaw-map --delete
+                command: aws s3 sync build s3://shaw-map --delete
 
 
     build-only:
@@ -78,7 +78,7 @@ jobs:
                 root: .
                 # Must be relative path from root
                 paths:
-                    - public
+                    - build
 
     deploy:
         docker:
@@ -96,7 +96,7 @@ jobs:
 
             - run:
                 name: Deploy to S3
-                command: aws s3 sync public s3://shaw-map --delete
+                command: aws s3 sync build s3://shaw-map --delete
 
 #            - run:
 #                name: Enable preview
@@ -123,7 +123,7 @@ jobs:
 
             - run:
                 name: Deploy to S3
-                command: aws s3 sync public s3://shaw-map-dev --delete
+                command: aws s3 sync build s3://shaw-map-dev --delete
 
 workflows:
   version: 2
