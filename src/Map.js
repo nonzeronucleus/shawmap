@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import styled from 'styled-components';
-import {Map as LeafletMap, TileLayer} from 'react-leaflet';
+import {Map, TileLayer} from 'react-leaflet';
 import {LatLng, LatLngBounds} from 'leaflet';
+import Portal from './Portal';
+import OpacityControl from './OpacityControl';
 
 
-
-export default({opacity, showMap, showSmallGrid, showLargeGrid, showOrigMap}) => {
+export default({showMap, showSmallGrid, showLargeGrid, showOrigMap}) => {
+    const [opacity, setOpacity] = useState("70");
     const lng = -1.3;
     const lat = 53.028;
     const startingZoom = 12;
@@ -14,7 +16,7 @@ export default({opacity, showMap, showSmallGrid, showLargeGrid, showOrigMap}) =>
     const bounds = new LatLngBounds(new LatLng(53.1, -1.4), new LatLng(52.9, -1.198));
 
     return (
-        <LeafletMap center={position} zoom={startingZoom} maxBounds={bounds}>
+        <Map center={position} zoom={startingZoom} maxBounds={bounds}>
 
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -42,7 +44,7 @@ export default({opacity, showMap, showSmallGrid, showLargeGrid, showOrigMap}) =>
                 minNativeZoom={14}
                 maxNativeZoom={16}
                 transparant
-                opacity={opacity / 10}
+                opacity={opacity / 100}
                 bounds={bounds}/>
             }
 
@@ -57,6 +59,9 @@ export default({opacity, showMap, showSmallGrid, showLargeGrid, showOrigMap}) =>
                 bounds={bounds}/>
             }
 
-        </LeafletMap>
+            <Portal position="bottomleft">
+                <OpacityControl {...{setOpacity}} />
+            </Portal>
+        </Map>
     )
 }
