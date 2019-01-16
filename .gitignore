@@ -6,12 +6,15 @@
 .pnp.js
 
 /images
+/public/tiles-old
 
 # testing
 /coverage
 
 # production
 /build
+
+
 
 # misc
 .DS_Store
