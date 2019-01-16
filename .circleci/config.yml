@@ -1,0 +1,146 @@
+version: 2
+jobs:
+    #need separate build step to accept calls from contentful webhook
+    build:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                keys:
+                - v3-dependencies-{{ checksum "package.json" }}
+                # fallback to using the latest cache if no exact match is found
+                - v3-dependencies-
+
+            - run: yarn install
+
+            - save_cache:
+                paths:
+                    - node_modules
+                key: v3-dependencies-{{ checksum "package.json" }}
+
+            # run tests!
+            # - run:
+            #    name: Test
+            #    command: yarn test
+
+            - run:
+                name: Build
+                command: yarn build
+
+            - run:
+                name: Install aws cli
+                command: sudo apt-get -y -qq install awscli
+
+            - run:
+                name: Deploy to S3
+                command: aws s3 sync public s3://shaw-map --delete
+
+
+    build-only:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                keys:
+                - v3-dependencies-{{ checksum "package.json" }}
+                # fallback to using the latest cache if no exact match is found
+                - v3-dependencies-
+
+            - run: yarn install
+
+            - save_cache:
+                paths:
+                    - node_modules
+                key: v3-dependencies-{{ checksum "package.json" }}
+
+            # run tests!
+            # - run:
+            #    name: Test
+            #    command: yarn test
+
+            - run:
+                name: Build
+                command: yarn build
+
+            - persist_to_workspace:
+                # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+            # taken to be the root directory of the workspace.
+                root: .
+                # Must be relative path from root
+                paths:
+                    - public
+
+    deploy:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - attach_workspace:
+                at: ~/repo
+
+            - run:
+                name: Install aws cli
+                command: sudo apt-get -y -qq install awscli
+
+            - run:
+                name: Deploy to S3
+                command: aws s3 sync public s3://shaw-map --delete
+
+#            - run:
+#                name: Enable preview
+#                command: aws configure set preview.cloudfront true
+
+#                name: Invalidate
+#            - run:
+#                command: aws cloudfront create-invalidation --distribution-id EMIX0KMQZU09H --paths /*
+
+
+    deploy-dev:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - attach_workspace:
+                at: ~/repo
+
+            - run:
+                name: Install aws cli
+                command: sudo apt-get -y -qq install awscli
+
+            - run:
+                name: Deploy to S3
+                command: aws s3 sync public s3://shaw-map-dev --delete
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build-only
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build-only
+
+      - deploy-dev:
+          requires:
+            - build-only
+          filters:
+            branches:
+              ignore: master
