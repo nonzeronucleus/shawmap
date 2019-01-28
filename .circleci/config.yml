@@ -96,7 +96,7 @@ jobs:
 
             - run:
                 name: Deploy to S3
-                command: aws s3 sync build s3://shaw-map --delete
+                command: aws s3 sync build s3://shaw-map --delete --exclude "/tiles/"
 
 #            - run:
 #                name: Enable preview
