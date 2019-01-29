@@ -31,7 +31,3 @@ export default () => {
     />
   )
 }
-
-// export default () => (
-//   <Layout logo={<img src="logo.png" alt="logo" width="100%"/>} map={<Main />} side={<div>Side</div>}/>
-// );
