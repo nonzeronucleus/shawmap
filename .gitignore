@@ -7,6 +7,7 @@
 
 /images
 /public/tiles-old
+/public/tiles
 
 # testing
 /coverage
