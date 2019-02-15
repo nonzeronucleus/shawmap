@@ -5,7 +5,8 @@ const Sidebar = styled.div`
     width: 100%;
 
     > img {
-        width: 100%;
+        width: 300px;
+        float:right;
     }
 `;
 
