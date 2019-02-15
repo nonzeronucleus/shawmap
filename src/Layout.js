@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import Sidebar from './Sidebar';
+import SidebarContents from './SidebarContents';
+import MenuButton from './MenuButton';
 
 const GlobalStyle = createGlobalStyle`
   .leaflet-container {
@@ -21,29 +24,45 @@ const GlobalStyle = createGlobalStyle`
 
 const Container = styled.div`
   position:absolute;
-//   display:flex;
-//   flex-direction:row;
+  display:flex;
   width:100%;
   height:100%;
+  top:0;
+  left:0;
   background-color:blue;
 `;
 
 
-// const Main = styled.div`
-//   background-color:red;
-// //   width:100%;
-//   height:100%;
-// `;
+const Main = styled.main`
+  width:100%;
+  height:100%;
+  background-color:red;
+  border-width:2px;
+  border-style:solid;
+  border-color:black;
+  display:inline-grid;
+`;
 
 
+const useToggle = (initVal) => {
+  const [value, setValue] = useState(initVal)
+
+  const toggleValue = () => {
+    setValue(!value);
+  }
+
+  return [value, toggleValue];
+}
 
 export default ({logo, side, map}) => {
+    const [sidebarVisible, toggleVisibility] = useToggle(true);
 
     return (
-        <Container>
-            <GlobalStyle/>
-
-            {map}
-        </Container>
+      <Container>
+        <GlobalStyle />
+        <Sidebar pose={sidebarVisible? "open" : "closed"} ><SidebarContents /></Sidebar>
+        <Main>{React.cloneElement(map, {menuButton:<MenuButton onClick={toggleVisibility}/>})}</Main>
+      </Container>
     );
 }
+
