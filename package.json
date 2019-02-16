@@ -1,7 +1,7 @@
 {
   "name": "shaw-map",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
+  "private": false,
   "dependencies": {
     "leaflet": "1.3.4",
     "react": "16.8.1",
