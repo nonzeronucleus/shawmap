@@ -4,9 +4,16 @@ import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import {LatLng, LatLngBounds} from 'leaflet';
 import Portal from './Portal';
 import OpacityControl from './OpacityControl';
+import 'leaflet/dist/leaflet.css';
+import { Sidebar, Tab } from 'react-leaflet-sidetabs'
+import { FiHome, FiChevronRight, FiSearch, FiSettings } from "react-icons/fi";
+// import useToggle from './useToggle';
+
 
 
 export default({showMap, showSmallGrid, showLargeGrid, showOrigMap, menuButton, ...rest}) => {
+    const [sidebarVisible, setVisibility] = useState(false);
+    const [selected, setSelected] = useState('home')
     const [opacity, setOpacity] = useState("70");
     const lng = -1.282;
     const lat = 53.028;
@@ -22,8 +29,38 @@ export default({showMap, showSmallGrid, showLargeGrid, showOrigMap, menuButton, 
         setTimeout(()=> mapRef.current.leafletElement.invalidateSize(),300);
     }
 
+    const onOpen = () => {
+        setVisibility(true);
+        setSelected('home');
+    }
+
+    const onClose = () => {
+        setVisibility(false);
+    }
+
     return (
+        <div>
+        <Sidebar
+        id="sidebar"
+        position="right"
+        collapsed={!sidebarVisible}
+        closeIcon={<FiChevronRight />}
+        selected={selected}
+        onOpen={ onOpen}
+        onClose={ onClose }
+    >
+        <Tab id="home" header="Home" icon={<FiHome />}>
+            <p>No place like home!</p>
+        </Tab>
+        <Tab id="search" header="Search" icon={<FiSearch />}>
+            <p>The noblest search is the search for excellence!</p>
+        </Tab>
+        <Tab id="settings" header="Settings" anchor="bottom" icon={<FiSettings />}>
+            <p>We don't want privacy so much as privacy settings!</p>
+        </Tab>
+    </Sidebar>
         <Map ref={mapRef} center={position} zoom={startingZoom} maxBounds={bounds} zoomControl={false}>
+
             <Portal position="topleft">
                 {menuButton}
             </Portal>
@@ -77,5 +114,7 @@ export default({showMap, showSmallGrid, showLargeGrid, showOrigMap, menuButton, 
                 <OpacityControl {...{setOpacity}} />
             </Portal>
         </Map>
+        </div>
+
     )
 }

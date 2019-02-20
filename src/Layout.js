@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import Sidebar from './Sidebar';
-import SidebarContents from './SidebarContents';
-import MenuButton from './MenuButton';
-import useToggle from './useToggle';
+// import Sidebar from './Sidebar';
+// import SidebarContents from './SidebarContents';
+// import MenuButton from './MenuButton';
+// import useToggle from './useToggle';
 
 const GlobalStyle = createGlobalStyle`
   .leaflet-container {
@@ -46,14 +46,15 @@ const Main = styled.main`
 
 
 export default ({logo, side, map}) => {
-    const [sidebarVisible, toggleVisibility] = useToggle(true);
+    // const [sidebarVisible, toggleVisibility] = useToggle(true);
 
     return (
       <Container>
         <GlobalStyle />
-        <Sidebar pose={sidebarVisible? "open" : "closed"} ><SidebarContents /></Sidebar>
-        <Main>{React.cloneElement(map, {menuButton:<MenuButton onClick={toggleVisibility}/>})}</Main>
+        <Main>{map}</Main>
       </Container>
     );
 }
+
+// {React.cloneElement(map, {menuButton:<MenuButton onClick={toggleVisibility}/>})}
 
