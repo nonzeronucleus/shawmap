@@ -66,7 +66,7 @@ export default({showMap, showSmallGrid, showLargeGrid, showOrigMap, menuButton, 
             </Portal>
 
 
-            <ZoomControl position="bottomright"/>
+            <ZoomControl position="topleft"/>
 
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
