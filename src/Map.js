@@ -6,7 +6,7 @@ import Portal from './Portal';
 import OpacityControl from './OpacityControl';
 import 'leaflet/dist/leaflet.css';
 import { Sidebar, Tab } from 'react-leaflet-sidetabs'
-import { FiHome, FiChevronRight, FiSearch, FiSettings } from "react-icons/fi";
+import { FiHome, FiChevronRight} from "react-icons/fi";
 // import useToggle from './useToggle';
 
 
@@ -50,13 +50,11 @@ export default({showMap, showSmallGrid, showLargeGrid, showOrigMap, menuButton, 
         onClose={ onClose }
     >
         <Tab id="home" header="Home" icon={<FiHome />}>
-            <p>No place like home!</p>
-        </Tab>
-        <Tab id="search" header="Search" icon={<FiSearch />}>
-            <p>The noblest search is the search for excellence!</p>
-        </Tab>
-        <Tab id="settings" header="Settings" anchor="bottom" icon={<FiSettings />}>
-            <p>We don't want privacy so much as privacy settings!</p>
+            <p><a href="/docs/T_Kimberley.pdf">Kimberley</a></p>
+            <p><a href="/docs/T_Brinsley.pdf">Brinsley</a></p>
+            <p><a href="/docs/T_Watnall.pdf">Watnall</a></p>
+            <p><a href="/docs/T_Moorgreen.pdf">Moorgreen</a></p>
+            <p><a href="/docs/T_Newthorpe.pdf">Newthorpe</a></p>
         </Tab>
     </Sidebar>
         <Map ref={mapRef} center={position} zoom={startingZoom} maxBounds={bounds} zoomControl={false}>
