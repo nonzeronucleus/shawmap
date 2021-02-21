@@ -55,6 +55,7 @@ export default({showMap, showSmallGrid, showLargeGrid, showOrigMap, menuButton, 
             <p><a href="/docs/T_Watnall.pdf">Watnall</a></p>
             <p><a href="/docs/T_Moorgreen.pdf">Moorgreen</a></p>
             <p><a href="/docs/T_Newthorpe.pdf">Newthorpe</a></p>
+            <p><a href="/docs/FullDoc.pdf">Original</a></p>
         </Tab>
     </Sidebar>
         <Map ref={mapRef} center={position} zoom={startingZoom} maxBounds={bounds} zoomControl={false}>
