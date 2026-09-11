@@ -13,7 +13,7 @@
     "react-leaflet-sidetabs": "1.0.1",
     "react-pose": "4.0.10",
     "react-scripts": "4.0.2",
-    "rollup": "^2.39.0",
+    "rollup": "^2.80.0",
     "styled-components": "4.1.2"
   },
   "devDependencies": {
